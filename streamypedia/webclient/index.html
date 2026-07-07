@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Streamypedia</title>
+    <style>
+      :root {
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.12);
+      }
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #1e1b4b, #4c1d95, #0f766e);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+      }
+      @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      #root {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="glass-card">
+        <h1>Welcome to Streamypedia</h1>
+        <p>Your phone. Your library. Your stream.</p>
+        <video id="video-player" controls style="width: 100%; max-width: 800px; display: none;"></video>
+      </div>
+    </div>
+    <script type="module">
+      // Placeholder for React app injection
+      import Hls from 'hls.js';
+      window.Hls = Hls;
+    </script>
+  </body>
+</html>
