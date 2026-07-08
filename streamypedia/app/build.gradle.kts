@@ -1,22 +1,22 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 android {
     namespace = "com.fiozxr.streamypedia"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.fiozxr.streamypedia"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -34,12 +34,15 @@ dependencies {
     implementation(project(":server"))
     implementation(project(":data"))
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
 
-    val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
+    val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.exoplayer)
 }

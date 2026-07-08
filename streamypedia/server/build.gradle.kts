@@ -1,18 +1,19 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
     namespace = "com.fiozxr.streamypedia.server"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 26
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -20,6 +21,15 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    // Note: Ktor and FFmpeg dependencies will be added here
+    implementation(project(":data"))
+
+    implementation(libs.androidx.core.ktx)
+
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.ktor.server.cors)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+
+    implementation(libs.kotlinx.coroutines.android)
 }

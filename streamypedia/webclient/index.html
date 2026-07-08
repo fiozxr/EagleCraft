@@ -29,6 +29,7 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
+        padding: 2rem;
       }
       .glass-card {
         background: var(--glass-bg);
@@ -38,21 +39,82 @@
         border-radius: 20px;
         padding: 2rem;
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 2rem;
+      }
+      .library-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        width: 100%;
+        max-width: 1200px;
+      }
+      .movie-item {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 1rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .movie-item:hover {
+        transform: scale(1.04);
       }
     </style>
   </head>
   <body>
     <div id="root">
       <div class="glass-card">
-        <h1>Welcome to Streamypedia</h1>
-        <p>Your phone. Your library. Your stream.</p>
-        <video id="video-player" controls style="width: 100%; max-width: 800px; display: none;"></video>
+        <h1>Streamypedia Library</h1>
+        <div id="video-container" style="display: none; margin-top: 1rem;">
+            <video id="video-player" controls style="width: 100%; border-radius: 12px;"></video>
+            <button onclick="closePlayer()" style="margin-top: 1rem; padding: 0.5rem 1rem; border-radius: 8px; border: none; background: #0f766e; color: white; cursor: pointer;">Close Player</button>
+        </div>
+      </div>
+      <div class="library-grid" id="library-grid">
+          <!-- Populated by JS -->
       </div>
     </div>
-    <script type="module">
-      // Placeholder for React app injection
-      import Hls from 'hls.js';
-      window.Hls = Hls;
+    <script>
+      async function loadLibrary() {
+        try {
+          // Point to local Ktor API
+          const response = await fetch('http://localhost:8096/api/library');
+          const movies = await response.json();
+          const grid = document.getElementById('library-grid');
+          grid.innerHTML = '';
+
+          movies.forEach(movie => {
+              const div = document.createElement('div');
+              div.className = 'movie-item';
+              div.innerHTML = `<h3>${movie.title}</h3>`;
+              div.onclick = () => playMovie(movie.id);
+              grid.appendChild(div);
+          });
+        } catch (e) {
+            console.error("Error loading library", e);
+        }
+      }
+
+      function playMovie(id) {
+          const container = document.getElementById('video-container');
+          const player = document.getElementById('video-player');
+          container.style.display = 'block';
+          player.src = `http://localhost:8096/stream/${id}`;
+          player.play();
+      }
+
+      function closePlayer() {
+          const container = document.getElementById('video-container');
+          const player = document.getElementById('video-player');
+          player.pause();
+          player.src = '';
+          container.style.display = 'none';
+      }
+
+      // Load on start
+      window.onload = loadLibrary;
     </script>
   </body>
 </html>

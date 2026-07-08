@@ -1,18 +1,19 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.fiozxr.streamypedia.data"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 26
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -20,6 +21,10 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    // Note: Room and other dependencies will be added here
+    implementation(libs.androidx.core.ktx)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+
+    implementation(libs.kotlinx.coroutines.android)
 }

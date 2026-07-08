@@ -1,8 +1,11 @@
 package com.fiozxr.streamypedia.data
 
-// Basic entity representation (Room annotations would be added later)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "movies")
 data class Movie(
-    val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
     val filePath: String,
     val posterUrl: String? = null,
